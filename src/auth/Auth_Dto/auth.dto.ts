@@ -9,9 +9,6 @@ export class RegisterDto{
     @IsNotEmpty()
     surname: string
 
-    @IsNumber()
-    @IsNotEmpty()
-    age: number
 
     @IsString()
     @IsNotEmpty()
@@ -29,4 +26,16 @@ export class RegisterDto{
     @IsString()
     @IsNotEmpty()
     address: string
+}
+
+export class LoginDto{
+
+    @IsString()
+    @IsNotEmpty()
+    @IsEmail()
+    email: string
+
+    @IsString()
+    @IsNotEmpty()
+    password: string
 }

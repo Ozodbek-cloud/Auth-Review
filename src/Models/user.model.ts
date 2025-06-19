@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { Table, Column, Model} from "sequelize-typescript";
+import { UserRole } from "src/global/type/user.roles";
 
 @Table
 export class Auth extends Model{
@@ -26,6 +27,13 @@ export class Auth extends Model{
         type: DataTypes.STRING
     })
     email: true
+
+    @Column({
+      type: DataTypes.ENUM(...Object.values(UserRole)),
+      defaultValue: UserRole.USER
+   })
+   role: UserRole
+   
 
     @Column({
         type: DataTypes.STRING,
