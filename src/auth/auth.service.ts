@@ -45,14 +45,23 @@ export class AuthService {
             accessToken, refreshToken
         };
     }
-    // async reset_password(password: string, username: string) {
-    //     let exists = await this.authModel.findOne({
-    //         where: {
-    //             username: username
-    //         }
-    //     })
-    //     if (!exists) throw new BadRequestException(`${username} is not Found`)
-        
-    //     let updated = await this.authModel.update(password)
-    // }
+    
+    async reset_password(password: string, username: string) {
+    const user = await this.authModel.findOne({
+        where: { username }
+    });
+
+    if (!user) {
+        throw new BadRequestException(`${username} is not found`);
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await this.authModel.update(
+        { password: hashedPassword },
+        { where: { username } }
+    );
+
+    return { message: 'Password updated successfully' };
+   }
 }
